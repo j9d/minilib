@@ -1,0 +1,9 @@
+services:
+  minilib:
+    container_name: minilib
+    image: minilib
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+    - "8000:8000"
