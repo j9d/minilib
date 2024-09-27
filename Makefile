@@ -6,3 +6,6 @@ build:
 
 up:
 	docker compose up
+
+shell:
+	docker exec -it minilib /bin/bash

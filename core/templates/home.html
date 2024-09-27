@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<div></div>
+<div>
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+        <button class="nav-button" type="submit">Logout</button>
+    </form>
+</div>
+{% endblock nav %}
+
+{% block content %}
+<div>
+    hello
+</div>
+{% endblock content %}

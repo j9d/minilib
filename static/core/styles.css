@@ -1,0 +1,43 @@
+* {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+body {
+    margin: 0;
+}
+
+#content {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+nav {
+    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    background-color: cornflowerblue;
+}
+
+form {
+    height: 100%;
+}
+
+.nav-button {
+    display: inline-block;
+    font-size: 0.9em;
+    height: 100%;
+    padding: 0 2rem;
+    background-color: cornflowerblue;
+    color: #F7FAFE;
+    font-weight: bold;
+    border: none;
+    text-decoration: none;
+    align-content: center;
+}
+
+.nav-button:hover {
+    cursor: pointer;
+    background-color: #F7FAFE;
+    color: cornflowerblue;
+    
+}
