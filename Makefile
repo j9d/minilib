@@ -1,5 +1,5 @@
 lint:
-	uv run black minilib && uv run isort minilib
+	uv run black . && uv run isort .
 
 build:
 	docker compose build
