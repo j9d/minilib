@@ -16,23 +16,29 @@ nav {
     display: flex;
     justify-content: space-between;
     background-color: cornflowerblue;
+    padding-left: 10%;
+    padding-right: 10%
 }
 
 form {
     height: 100%;
 }
 
-.nav-button {
-    display: inline-block;
+.nav-text {
     font-size: 0.9em;
     height: 100%;
-    padding: 0 2rem;
     background-color: cornflowerblue;
     color: #F7FAFE;
     font-weight: bold;
+    align-content: center;
+    margin: 0;
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 0 2rem;
     border: none;
     text-decoration: none;
-    align-content: center;
 }
 
 .nav-button:hover {

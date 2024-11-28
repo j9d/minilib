@@ -7,7 +7,12 @@
 </head>
 
 <body>
-    <nav>{% block nav %}{% endblock nav %}</nav>
+    <nav>
+        {% block nav %}
+        <div class="nav-text"><p>minilib</p></div>
+        <div></div>
+        {% endblock nav %}
+    </nav>
     <div id="content">{% block content %}{% endblock content %}</div>
 </body>
 </html>
