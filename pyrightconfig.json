@@ -1,0 +1,11 @@
+{
+    "ignore": [
+        "**/migrations/**",
+        "**/__pycache__/**"
+    ],
+    "reportExplicitAny": "none",
+    "reportUnusedCallResult": "none",
+    "reportUnannotatedClassAttribute": "none",
+    "reportUnknownVariableType": "none",
+    "reportUnknownMemberType": "none"
+}
