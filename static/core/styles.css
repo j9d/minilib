@@ -47,3 +47,25 @@ form {
     color: cornflowerblue;
     
 }
+
+.home-section {
+    margin-top: 3rem;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table.book-list {
+    width: 100%;
+}
+
+#response-message {
+    color: green;
+}
+
+#error-message {
+    color: red;
+}

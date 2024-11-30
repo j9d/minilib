@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.contrib.auth.decorators import login_required
+from django.forms.models import model_to_dict
 from django.http import (
     HttpRequest,
     HttpResponseBadRequest,
@@ -16,7 +17,22 @@ from core.utils import search
 
 @login_required
 def home(request: HttpRequest):
-    return TemplateResponse(request, "home.html")
+    books: list[dict[str, Any]] = []
+    queryset = Book.objects.all().order_by("title").prefetch_related("authors")
+    for book in queryset:
+        book_dict = model_to_dict(book, fields=["title", "year", "authors"])
+        authors = book.authors.values_list("name", flat=True)
+        book_dict["authors"] = authors
+        books.append(book_dict)
+
+    context = {
+        "books": books,
+    }
+    return TemplateResponse(
+        request,
+        template="home.html",
+        context=context,
+    )
 
 
 @login_required
@@ -25,36 +41,34 @@ def add(request: HttpRequest):
         return HttpResponseNotAllowed(permitted_methods=["POST"])
 
     isbn = request.POST.get("isbn", None)
-    if isbn is None:
+    if not isbn:
         return HttpResponseBadRequest("ISBN is required")
 
     if Book.objects.filter(isbn=isbn).exists():
-        return HttpResponse(status=200)
+        return HttpResponse("Book already exists", status=200)
 
     book = search(isbn)
     if book is None:
-        return HttpResponseNotFound()
+        return HttpResponseNotFound("ISBN not found")
 
-    book_info: dict[str, Any] = book.get("docs", [])[0]
-
-    author_keys: list[str] = book_info.get("author_key", [])
-    author_names: list[str] = book_info.get("author_name", [])
+    author_keys: list[str] = book.get("author_key", [])
+    author_names: list[str] = book.get("author_name", [])
 
     authors: list[Author] = []
     for key, name in zip(author_keys, author_names):
-        existing_author = Author.objects.filter(author_key=key).first()
+        existing_author = Author.objects.filter(key=key).first()
         if existing_author:
             authors.append(existing_author)
         else:
-            authors.append(Author.objects.create(author_key=key, name=name))
+            authors.append(Author.objects.create(key=key, name=name))
 
-    publish_years: list[int] = book_info.get("publish_year", [])
+    publish_years: list[int] = book.get("publish_year", [])
     year: int | None = None
     if publish_years:
         year = min(publish_years)
 
-    title: str = book_info.get("title", "")
-    key: str = book_info.get("key", "")
+    title: str = book.get("title", "")
+    key: str = book.get("key", "")
 
     book = Book.objects.create(
         isbn=isbn,
@@ -65,4 +79,7 @@ def add(request: HttpRequest):
     for author in authors:
         book.authors.add(author)
 
-    return HttpResponse(status=201)
+    return HttpResponse(
+        f"Book '{title}' added successfully",
+        status=201,
+    )

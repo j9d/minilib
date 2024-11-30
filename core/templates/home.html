@@ -7,13 +7,43 @@
 <div>
     <form action="{% url 'logout' %}" method="POST">
         {% csrf_token %}
-    <button class="nav-button nav-text" type="submit">Logout</button>
-</form>
+        <button class="nav-button nav-text" type="submit">Logout</button>
+    </form>
 </div>
 {% endblock nav %}
 
 {% block content %}
-<div>
-    hello
+<div class="home-section">
+    <form hx-post="{% url 'add' %}" hx-target="#response-message" hx-target-error="#error-message" hx-swap="innerHTML">
+        <label>
+            ISBN:
+            <input name="isbn" />
+        </label>
+        <input type="submit" />
+    </form>
+    <div id="error-message"></div>
+    <div id="response-message"></div>
+</div>
+<div class="home-section">
+    <table class="book-list">
+        <tr>
+            <th>Title</th>
+            <th>Authors</th>
+            <th>Year</th>
+        </tr>
+        {% if books %}
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.authors|join:", " }}</td>
+                    <td>{{ book.year }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan=3>No books</td>
+        </tr>
+        {% endif %}
+    </table>
 </div>
 {% endblock content %}
