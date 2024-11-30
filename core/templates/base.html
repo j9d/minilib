@@ -2,12 +2,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="{% static 'htmx/htmx.min.js' %}" defer></script>
+    <script src="{% static 'htmx/htmx.min.js' %}"></script>
+    <script src="{% static 'htmx/response-targets.js' %}"></script>
     <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
     <title>minilib</title>
 </head>
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-ext="response-targets">
     <nav>
         {% block nav %}
         <div class="nav-text"><p>minilib</p></div>
